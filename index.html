@@ -25,40 +25,22 @@
         input{
             border: none;
             outline: none;
-            margin: 10px;
+            margin: 10PX;
             text-align: center;
             border-bottom: 3px solid gray;
             transition: all 0.3s ease-in-out;
         }
 
         input:focus {
-            border-bottom: 3px solid gray;
-            transform: scaleX(1.2);
+            border-bottom: 3px solid gray; /* Focus olduğunda farklı bir renk kullan */
+            transform: scaleX(1.2); /* Border bottom efektini ortadan ikiye açar */
         }
     </style>
-</head>
-<body>
-    <div id="login">
-        <h2 id="baslik">kalbimin sahibi</h2><br>
-        <input type="text" id="input1" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 0)" onkeypress="checkEnterKey(event)">
-        <input type="text" id="input2" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 1)" onkeypress="checkEnterKey(event)">
-        <input type="text" id="input3" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 2)" onkeypress="checkEnterKey(event)">
-        <input type="text" id="input4" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 3)" onkeypress="checkEnterKey(event)">
-        <input type="text" id="input5" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 4)" onkeypress="checkEnterKey(event)">
-        <input type="text" id="input6" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 5)" onkeypress="checkEnterKey(event)">
-    </div>
-
-    <div id="logout" style="display: none;">
-        <h2></h2>
-        <p>Giriş yapıldı.</p>
-        <button id="cikis-butonu" class="fab fa fa-walking" onclick="logout()">Log-out</button>
-    </div>
-
     <script>
         function handleInput(e, index) {
             var input = e.target;
 
-            if (e.keyCode === 8 || e.keyCode === 46) {
+            if (e.keyCode === 8 || e.keyCode === 46) { // Delete veya Backspace tuşuna basılırsa
                 input.value = "";
 
                 if (index > 0) {
@@ -66,7 +48,7 @@
                     previousInput.focus();
                 }
             } else {
-                if (input.value.length === 1 && index < 5) {
+                if (input.value.length === 1 && index < 5) { // 4 haneli şifre olduğu için index < 5
                     var nextInput = input.nextElementSibling;
                     nextInput.focus();
                 }
@@ -75,7 +57,7 @@
 
         function checkPassword() {
             var password = "";
-            for (var i = 1; i <= 6; i++) {
+            for (var i = 1; i <= 6; i++) { // 6 haneli şifre olduğu için i <= 6
                 password += document.getElementById("input" + i).value;
             }
 
@@ -87,11 +69,12 @@
         }
 
         function logout() {
-            location.reload();
+            document.getElementById("logout").style.display = "none";
+            document.getElementById("login").style.display = "block";
         }
 
         function clearInputs() {
-            for (var i = 1; i <= 6; i++) {
+            for (var i = 1; i <= 6; i++) { // 6 haneli şifre olduğu için i <= 6
                 document.getElementById("input" + i).value = "";
             }
         }
@@ -104,10 +87,27 @@
         }
 
         function checkEnterKey(event) {
-            if (event.keyCode === 13) {
+            if (event.keyCode === 13) { // Enter tuşuna basılırsa
                 checkPassword();
             }
         }
     </script>
+</head>
+<body>
+    <div id="login">
+        <h2 id="baslik">Şifreyi gir</h2><br>
+        <input type="text" id="input1" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 0)" onkeypress="checkEnterKey(event)">
+        <input type="text" id="input2" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 1)" onkeypress="checkEnterKey(event)">
+        <input type="text" id="input3" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 2)" onkeypress="checkEnterKey(event)">
+        <input type="text" id="input4" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 3)" onkeypress="checkEnterKey(event)">
+        <input type="text" id="input5" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 4)" onkeypress="checkEnterKey(event)"> <!-- Yeni kutu -->
+        <input type="text" id="input6" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 5)" onkeypress="checkEnterKey(event)"> <!-- Yeni kutu -->
+    </div>
+
+    <div id="logout" style="display: none;">
+        <h2></h2>
+        <p>Giriş yapıldı.</p>
+        <button id="cikis-butonu" class="fab fa fa-walking" onclick="logout()">Log-out</button>
+    </div>
 </body>
 </html>

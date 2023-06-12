@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+    <title>Log-in / Log-of Sayfası</title>
+    <style>
+        #cikis-butonu{
+            background: none;
+            outline: none;
+            border: none;
+        }
+
+        #baslik{
+            position: absolute;
+            top: 20%;
+            text-align: center;
+        }
+        #login{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 96vh;
+        }
+        input{
+            border: none;
+            outline: none;
+            margin: 10px;
+            text-align: center;
+            border-bottom: 3px solid gray;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input:focus {
+            border-bottom: 3px solid gray;
+            transform: scaleX(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="login">
+        <h2 id="baslik">kalbimin sahibi</h2><br>
+        <input type="text" id="input1" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 0)" onkeypress="checkEnterKey(event)">
+        <input type="text" id="input2" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 1)" onkeypress="checkEnterKey(event)">
+        <input type="text" id="input3" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 2)" onkeypress="checkEnterKey(event)">
+        <input type="text" id="input4" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 3)" onkeypress="checkEnterKey(event)">
+        <input type="text" id="input5" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 4)" onkeypress="checkEnterKey(event)">
+        <input type="text" id="input6" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 5)" onkeypress="checkEnterKey(event)">
+    </div>
+
+    <div id="logout" style="display: none;">
+        <h2>gizli</h2>
+        <p>Giriş yapıldı.</p>
+        <button id="cikis-butonu" class="fab fa fa-walking" onclick="logout()">Log-out</button>
+    </div>
+
+    <script>
+        function handleInput(e, index) {
+            var input = e.target;
+
+            if (e.keyCode === 8 || e.keyCode === 46) {
+                input.value = "";
+
+                if (index > 0) {
+                    var previousInput = input.previousElementSibling;
+                    previousInput.focus();
+                }
+            } else {
+                if (input.value.length === 1 && index < 5) {
+                    var nextInput = input.nextElementSibling;
+                    nextInput.focus();
+                }
+            }
+        }
+
+        function checkPassword() {
+            var password = "";
+            for (var i = 1; i <= 6; i++) {
+                password += document.getElementById("input" + i).value;
+            }
+
+            if (password === "ilayda") {
+                document.getElementById("login").style.display = "none";
+                document.getElementById("logout").style.display = "block";
+                clearInputs();
+            }
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        function clearInputs() {
+            for (var i = 1; i <= 6; i++) {
+                document.getElementById("input" + i).value = "";
+            }
+        }
+
+        function moveNext(currentInput) {
+            if (currentInput.value.length === 1) {
+                var nextInput = currentInput.nextElementSibling;
+                nextInput.focus();
+            }
+        }
+
+        function checkEnterKey(event) {
+            if (event.keyCode === 13) {
+                checkPassword();
+            }
+        }
+    </script>
+</body>
+</html>

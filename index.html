@@ -1,115 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planlayıcı</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
 
-    <title>Log-in / Log-of Sayfası</title>
-    <style>
-        #cikis-butonu{
-            background: none;
-            outline: none;
-            border: none;
-        }
+    <link rel="icon" type="image/x-icon" href="Res/_e120087a-75ba-4c5c-ba52-25cc66b90479.png">
 
-        #baslik{
-            position: absolute;
-            top: 20%;
-            text-align: center;
-        }
-        #login{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 96vh;
-        }
-        input{
-            border: none;
-            outline: none;
-            margin: 10PX;
-            text-align: center;
-            border-bottom: 3px solid gray;
-            transition: all 0.3s ease-in-out;
-        }
-
-        input:focus {
-            border-bottom: 3px solid gray; /* Focus olduğunda farklı bir renk kullan */
-            transform: scaleX(1.2); /* Border bottom efektini ortadan ikiye açar */
-        }
-    </style>
-    <script>
-        function handleInput(e, index) {
-            var input = e.target;
-
-            if (e.keyCode === 8 || e.keyCode === 46) { // Delete veya Backspace tuşuna basılırsa
-                input.value = "";
-
-                if (index > 0) {
-                    var previousInput = input.previousElementSibling;
-                    previousInput.focus();
-                }
-            } else {
-                if (input.value.length === 1 && index < 5) { // 4 haneli şifre olduğu için index < 5
-                    var nextInput = input.nextElementSibling;
-                    nextInput.focus();
-                }
-            }
-        }
-
-        function checkPassword() {
-            var password = "";
-            for (var i = 1; i <= 6; i++) { // 6 haneli şifre olduğu için i <= 6
-                password += document.getElementById("input" + i).value;
-            }
-
-            if (password === "ilayda") {
-                document.getElementById("login").style.display = "none";
-                document.getElementById("logout").style.display = "block";
-                clearInputs();
-            }
-        }
-
-        function logout() {
-            document.getElementById("logout").style.display = "none";
-            document.getElementById("login").style.display = "block";
-        }
-
-        function clearInputs() {
-            for (var i = 1; i <= 6; i++) { // 6 haneli şifre olduğu için i <= 6
-                document.getElementById("input" + i).value = "";
-            }
-        }
-
-        function moveNext(currentInput) {
-            if (currentInput.value.length === 1) {
-                var nextInput = currentInput.nextElementSibling;
-                nextInput.focus();
-            }
-        }
-
-        function checkEnterKey(event) {
-            if (event.keyCode === 13) { // Enter tuşuna basılırsa
-                checkPassword();
-            }
-        }
-    </script>
 </head>
 <body>
-    <div id="login">
-        <h2 id="baslik">Şifreyi gir</h2><br>
-        <input type="text" id="input1" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 0)" onkeypress="checkEnterKey(event)">
-        <input type="text" id="input2" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 1)" onkeypress="checkEnterKey(event)">
-        <input type="text" id="input3" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 2)" onkeypress="checkEnterKey(event)">
-        <input type="text" id="input4" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 3)" onkeypress="checkEnterKey(event)">
-        <input type="text" id="input5" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 4)" onkeypress="checkEnterKey(event)"> <!-- Yeni kutu -->
-        <input type="text" id="input6" maxlength="1" size="1" oninput="moveNext(this)" onkeydown="handleInput(event, 5)" onkeypress="checkEnterKey(event)"> <!-- Yeni kutu -->
-        <button onclick="checkPassword()">Giriş</button>
 
-    </div>
 
-    <div id="logout" style="display: none;">
-        <h2></h2>
-        <p>Giriş yapıldı.</p>
-        <button id="cikis-butonu" class="fab fa fa-walking" onclick="logout()">Log-out</button>
+    <img src="Res/Ekran görüntüsü 2024-01-07 020226.png" alt="">
+    <div class="head">
+        <h1>Haftalık Planlayıcı</h1>
     </div>
+    
+    <div class="time">
+        <div id="digital-clock"> 
+            <div class="flip" id="hour"></div>
+            <div class="flip" id="minute"></div>
+            <div class="flip" id="date">
+                <span id="calendar"></span>
+            </div>
+            <div class="asistan"></div>
+            <div class="kitap-okuma-takibi">
+                <i class="fa-light fa-book" id="kitap-iconu"></i>
+                <div class="hedef">
+                    <span id="okunan">0</span>/<span id="hedefSayıİnp" contenteditable="true" oninput="kontrolHedef(this)">0</span>
+                </div>
+                <div class="butonlar">
+                    <button onclick="degistirMiktar(-1)">-</button>
+                    <button onclick="degistirMiktar(1)">+</button>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="gorevler">
+            <ul>
+                <li><textarea oninput="gunleriyaz(this)" oninput="yildizEkle(this)" name="" id="" cols="30" rows="1" placeholder="Pazartesi için görev yok"></textarea></li>
+                <li><textarea oninput="gunleriyaz(this)" name="" id="" cols="30" rows="1" placeholder="Salı için görev yok"></textarea></li>
+                <li><textarea oninput="gunleriyaz(this)" name="" id="" cols="30" rows="1" placeholder="Çarşamba için görev yok"></textarea></li>
+                <li><textarea oninput="gunleriyaz(this)" name="" id="" cols="30" rows="1" placeholder="Perşembe için görev yok"></textarea></li>
+                <li><textarea oninput="gunleriyaz(this)" name="" id="" cols="30" rows="1" placeholder="Cuma için görev yok"></textarea></li>
+                <li><textarea oninput="gunleriyaz(this)" name="" id="" cols="30" rows="1" placeholder="Cumartesi için görev yok"></textarea></li>
+                <li><textarea oninput="gunleriyaz(this)" name="" id="" cols="30" rows="1" placeholder="pazar için görev yok"></textarea></li>
+            </ul>
+        </div>
+        <div class="not">
+            <textarea name="" id="not" cols="25" rows="15" oninput="eklemeYap(this)"></textarea>
+        </div>
+<script src="index.js"></script>
+
 </body>
 </html>
